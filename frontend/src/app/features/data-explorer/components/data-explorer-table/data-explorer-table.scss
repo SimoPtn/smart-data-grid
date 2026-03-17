@@ -1,0 +1,11 @@
+.data-table {
+  width: 100%;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.sortable {
+  cursor: pointer;
+  user-select: none;
+}

@@ -1,0 +1,32 @@
+@if (vm$ | async; as vm) {
+  <section class="data-explorer-page">
+    <h2>Data Explorer</h2>
+
+    @if (vm.loading) {
+      <p>Loading data...</p>
+    } @else {
+      <app-data-explorer-toolbar
+        (searchChanged)="onSearchValueChanged($event)"
+        (pageSizeChanged)="onPageSizeValueChanged($event)"
+      />
+
+      <p>Total records: {{ vm.filteredRecords.length }}</p>
+
+      <app-data-explorer-table
+        [records]="vm.paginatedRecords"
+        [displayedColumns]="vm.displayedColumns"
+        [sortState]="vm.sortState"
+        (sortChanged)="setSort($event)"
+      />
+
+      <app-data-explorer-pagination
+        [pageIndex]="vm.pageIndex"
+        [totalPages]="vm.totalPages"
+        [canGoPrev]="vm.canGoPrev"
+        [canGoNext]="vm.canGoNext"
+        (prev)="prevPage()"
+        (next)="nextPage()"
+      />
+    }
+  </section>
+}

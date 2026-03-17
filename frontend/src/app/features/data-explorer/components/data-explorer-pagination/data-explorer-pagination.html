@@ -1,0 +1,13 @@
+<div class="pagination">
+  <button mat-stroked-button (click)="onPrev()" [disabled]="!canGoPrev">
+    Prev
+  </button>
+
+  <span>
+    Page {{ pageIndex + 1 }} / {{ totalPages }}
+  </span>
+
+  <button mat-stroked-button (click)="onNext()" [disabled]="!canGoNext">
+    Next
+  </button>
+</div>

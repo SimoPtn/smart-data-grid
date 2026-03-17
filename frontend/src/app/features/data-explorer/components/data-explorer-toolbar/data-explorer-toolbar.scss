@@ -1,0 +1,10 @@
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+mat-form-field {
+  min-width: 220px;
+}

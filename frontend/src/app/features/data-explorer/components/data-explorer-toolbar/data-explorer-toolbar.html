@@ -1,0 +1,15 @@
+<div class="toolbar">
+  <mat-form-field appearance="outline">
+    <mat-label>Search</mat-label>
+    <input matInput (input)="onSearch($event)" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Page size</mat-label>
+    <mat-select (selectionChange)="onPageSizeChange($event)">
+      <mat-option [value]="5">5</mat-option>
+      <mat-option [value]="10">10</mat-option>
+      <mat-option [value]="20">20</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
