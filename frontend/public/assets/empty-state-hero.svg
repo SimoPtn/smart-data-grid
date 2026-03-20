@@ -1,0 +1,38 @@
+<svg width="900" height="420" viewBox="0 0 900 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="900" height="420" rx="32" fill="#F8FAFC"></rect>
+
+  <!-- background shapes -->
+  <rect x="80" y="40" width="740" height="120" rx="60" fill="#EEF2F7"></rect>
+  <rect x="120" y="250" width="660" height="110" rx="55" fill="#EEF2F7"></rect>
+
+  <!-- hanging hook -->
+  <rect x="440" y="30" width="20" height="80" rx="10" fill="#B8C4D1"></rect>
+  <rect x="440" y="90" width="20" height="50" rx="10" fill="#B8C4D1"></rect>
+
+  <!-- chain -->
+  <path d="M450 100C480 100 505 125 505 155V185H485V155C485 140 475 130 460 130C445 130 435 140 435 155V200H415V155C415 125 440 100 450 100Z" fill="#D5DDE7"></path>
+  <path d="M450 105C470 105 490 125 490 155V175H478V155C478 140 468 132 458 132C448 132 438 140 438 155V190H426V155C426 125 446 105 450 105Z" fill="#AAB8C8"></path>
+
+  <!-- back card -->
+  <rect x="220" y="150" width="460" height="220" rx="28" transform="rotate(-5 220 150)" fill="#EFF3F8" stroke="#AAB7C6" stroke-width="4"></rect>
+
+  <!-- front card -->
+  <rect x="240" y="120" width="460" height="240" rx="28" transform="rotate(5 240 120)" fill="#FFFFFF" stroke="#AAB7C6" stroke-width="4"></rect>
+
+  <!-- header dots -->
+  <circle cx="300" cy="150" r="8" fill="#E2E8F0"></circle>
+  <circle cx="330" cy="155" r="8" fill="#E2E8F0"></circle>
+  <circle cx="360" cy="160" r="8" fill="#E2E8F0"></circle>
+
+  <!-- face -->
+  <circle cx="450" cy="240" r="24" fill="#D1DAE6" stroke="#AAB7C6" stroke-width="3"></circle>
+  <circle cx="520" cy="250" r="24" fill="#D1DAE6" stroke="#AAB7C6" stroke-width="3"></circle>
+
+  <path d="M420 300C450 260 540 260 570 300" stroke="#AAB7C6" stroke-width="8" stroke-linecap="round"></path>
+
+  <!-- floating elements -->
+  <circle cx="180" cy="200" r="10" fill="#E2E8F0"></circle>
+  <circle cx="760" cy="220" r="10" fill="#E2E8F0"></circle>
+  <rect x="720" y="90" width="12" height="12" rx="2" stroke="#D3DBE5" stroke-width="3"></rect>
+  <rect x="300" y="350" width="12" height="12" rx="2" stroke="#D3DBE5" stroke-width="3"></rect>
+</svg>

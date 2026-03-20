@@ -10,23 +10,32 @@
         (pageSizeChanged)="onPageSizeValueChanged($event)"
       />
 
-      <p>Total records: {{ vm.filteredRecords.length }}</p>
+      @if (vm.filteredRecords.length > 0) {
+  <app-data-explorer-table
+    [records]="vm.paginatedRecords"
+    [displayedColumns]="vm.displayedColumns"
+    [sortState]="vm.sortState"
+    (sortChanged)="setSort($event)"
+  />
 
-      <app-data-explorer-table
-        [records]="vm.paginatedRecords"
-        [displayedColumns]="vm.displayedColumns"
-        [sortState]="vm.sortState"
-        (sortChanged)="setSort($event)"
-      />
+  <app-data-explorer-pagination
+    [pageIndex]="vm.pageIndex"
+    [totalPages]="vm.totalPages"
+    [canGoPrev]="vm.canGoPrev"
+    [canGoNext]="vm.canGoNext"
+    (prev)="prevPage()"
+    (next)="nextPage()"
+  />
+} @else {
+<div class="empty-state">
+  <img src="/assets/empty-state-hero.svg" alt="No results" />
 
-      <app-data-explorer-pagination
-        [pageIndex]="vm.pageIndex"
-        [totalPages]="vm.totalPages"
-        [canGoPrev]="vm.canGoPrev"
-        [canGoNext]="vm.canGoNext"
-        (prev)="prevPage()"
-        (next)="nextPage()"
-      />
+  <div class="empty-state-content">
+    <h3>No results found</h3>
+    <p>Try changing your search term.</p>
+  </div>
+</div>
+}
     }
   </section>
 }

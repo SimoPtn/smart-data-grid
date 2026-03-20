@@ -25,10 +25,12 @@
     <td mat-cell *matCellDef="let record">{{ record.company }}</td>
   </ng-container>
 
-  <ng-container matColumnDef="status">
-    <th mat-header-cell *matHeaderCellDef>Status</th>
-    <td mat-cell *matCellDef="let record">{{ record.status }}</td>
-  </ng-container>
+<ng-container matColumnDef="status">
+  <th mat-header-cell *matHeaderCellDef>Status</th>
+  <td mat-cell *matCellDef="let record">
+    <app-status-badge [status]="record.status" />
+  </td>
+</ng-container>
 
   <ng-container matColumnDef="score">
     <th mat-header-cell *matHeaderCellDef (click)="onSort('score')" class="sortable">

@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { DataRecord } from '../../models/data-record';
+import { StatusBadge } from '../status-badge/status-badge';
 
 type SortDirection = 'asc' | 'desc' | null;
 
@@ -15,7 +16,7 @@ type SortableColumn = 'name' | 'email' | 'score';
 @Component({
   selector: 'app-data-explorer-table',
   standalone: true,
-  imports: [CommonModule, MatTableModule],
+  imports: [CommonModule, MatTableModule, StatusBadge],
   templateUrl: './data-explorer-table.html',
   styleUrl: './data-explorer-table.scss',
 })
