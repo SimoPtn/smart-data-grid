@@ -1,15 +1,45 @@
 <div class="toolbar">
-  <mat-form-field appearance="outline">
-    <mat-label>Search</mat-label>
-    <input matInput (input)="onSearch($event)" />
-  </mat-form-field>
+  <div class="toolbar-left">
+    <mat-form-field appearance="outline">
+      <mat-label>Search</mat-label>
+      <input matInput [value]="searchTerm" (input)="onSearch($event)" />
 
-  <mat-form-field appearance="outline">
-    <mat-label>Page size</mat-label>
-    <mat-select (selectionChange)="onPageSizeChange($event)">
-      <mat-option [value]="5">5</mat-option>
-      <mat-option [value]="10">10</mat-option>
-      <mat-option [value]="20">20</mat-option>
-    </mat-select>
-  </mat-form-field>
+      @if (searchTerm) {
+      <button mat-icon-button matSuffix type="button" (click)="clearSearch()">
+        <mat-icon>close</mat-icon>
+      </button>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Page size</mat-label>
+      <mat-select [value]="pageSize" (selectionChange)="onPageSizeChange($event)">
+        <mat-option [value]="5">5</mat-option>
+        <mat-option [value]="10">10</mat-option>
+        <mat-option [value]="20">20</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="toolbar-right">
+  <div class="theme-toggle">
+  <mat-icon>
+    {{ isDark() ? 'dark_mode' : 'light_mode' }}
+  </mat-icon>
+
+  <mat-slide-toggle
+    [checked]="isDark()"
+    (change)="toggleTheme()"
+  >
+    Dark mode
+  </mat-slide-toggle>
+</div>
+    <button mat-stroked-button type="button" [disabled]="!hasActiveFilters" (click)="resetFilters()">
+      Reset
+    </button>
+
+    <button mat-flat-button color="primary" type="button" (click)="addRecord()">
+      Add record
+    </button>
+  </div>
 </div>

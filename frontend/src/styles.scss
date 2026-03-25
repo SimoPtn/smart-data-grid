@@ -36,3 +36,98 @@ body {
 .app-content {
   background: #f8fafc;
 }
+
+body.light-theme {
+  color-scheme: light;
+  background-color: #f1f5f9;
+  color: #0f172a;
+}
+
+body.dark-theme {
+  color-scheme: dark;
+  background-color: #0f172a;
+  color: #e2e8f0;
+
+  --mat-sys-surface: #1e293b;
+  --mat-sys-on-surface: #e2e8f0;
+}
+
+/* shell / page */
+body.dark-theme .app-content {
+  background: #0f172a;
+}
+
+body.dark-theme .table-summary {
+  color: #cbd5e1;
+}
+
+/* table */
+body.dark-theme .data-table {
+  background: #1e293b;
+}
+
+body.dark-theme .mat-mdc-header-row,
+body.dark-theme .mat-mdc-row {
+  background: #1e293b;
+}
+
+body.dark-theme .mat-mdc-header-cell,
+body.dark-theme .mat-mdc-cell {
+  color: #e2e8f0;
+  border-bottom-color: #334155;
+}
+
+/* toolbar buttons/icons */
+body.dark-theme .toolbar-right button {
+  color: #e2e8f0;
+}
+
+body.dark-theme .toolbar-right .mat-mdc-outlined-button {
+  border-color: #475569;
+}
+
+body.dark-theme .toolbar-right .mat-mdc-icon-button mat-icon {
+  color: #e2e8f0;
+}
+
+/* inputs/selects */
+body.dark-theme .mat-mdc-form-field {
+  --mdc-filled-text-field-label-text-color: #cbd5e1;
+  --mdc-outlined-text-field-label-text-color: #cbd5e1;
+  --mdc-outlined-text-field-input-text-color: #f8fafc;
+  --mdc-outlined-text-field-outline-color: #475569;
+  --mdc-outlined-text-field-focus-outline-color: #93c5fd;
+  --mat-select-enabled-trigger-text-color: #f8fafc;
+}
+
+/* menus */
+body.dark-theme .mat-mdc-menu-panel {
+  background: #1e293b;
+}
+
+body.dark-theme .columns-menu-title {
+  color: #e2e8f0;
+}
+
+/* empty state */
+body.dark-theme .empty-state {
+  background: #1e293b;
+}
+
+body.dark-theme .empty-state-content {
+  background: rgba(15, 23, 42, 0.72);
+}
+
+body.dark-theme .empty-state-content h3 {
+  color: #f8fafc;
+}
+
+body.dark-theme .empty-state-content p {
+  color: #cbd5e1;
+}
+
+/* dialogs */
+body.dark-theme .detail-item {
+  background: #0f172a;
+  border-color: #334155;
+}

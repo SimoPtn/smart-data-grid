@@ -8,12 +8,20 @@ interface SortState {
   key: keyof DataRecord | null;
   direction: SortDirection;
 }
+interface PersistedDataExplorerState {
+  searchTerm: string;
+  pageSize: number;
+  sort: SortState;
+}
 @Injectable({
   providedIn: 'root'
 })
 export class DataExplorerStore {
   
   private readonly dataService = inject(DataService);
+
+  private readonly storageKey = 'smart-data-grid-state';
+  private readonly recordsStorageKey = 'smart-data-grid-records';
 
   private readonly recordsSubject = new BehaviorSubject<DataRecord[]>([]);
   private readonly loadingSubject = new BehaviorSubject<boolean>(false);
@@ -26,7 +34,9 @@ export class DataExplorerStore {
 
   readonly records$ = this.recordsSubject.asObservable();
   readonly loading$ = this.loadingSubject.asObservable();
-  readonly searchTerm$ = this.searchTermSubject.asObservable().pipe(
+  readonly searchTerm$ = this.searchTermSubject.asObservable();
+
+  private readonly debouncedSearchTerm$ = this.searchTerm$.pipe(
     debounceTime(300),
     distinctUntilChanged()
   );
@@ -38,10 +48,24 @@ export class DataExplorerStore {
 
 readonly sort$ = this.sortSubject.asObservable();
 
+readonly hasActiveFilters$ = combineLatest([
+  this.searchTerm$,
+  this.pageSize$,
+  this.sort$
+]).pipe(
+  map(([searchTerm, pageSize, sort]) => {
+    const hasSearch = searchTerm.trim().length > 0;
+    const hasCustomPageSize = pageSize !== 5;
+    const hasSort = sort.key !== null && sort.direction !== null;
+
+    return hasSearch || hasCustomPageSize || hasSort;
+  })
+);
+
 
   readonly filteredRecords$ = combineLatest([
   this.records$,
-  this.searchTerm$,
+  this.debouncedSearchTerm$,
   this.sort$
 ]).pipe(
   map(([records, searchTerm, sort]) => {
@@ -110,11 +134,21 @@ readonly canGoPrev$ = this.pageIndex$.pipe(
 );
 
   loadData(): void {
+    this.restoreState();
     this.loadingSubject.next(true);
+
+    const storedRecords = this.getStoredRecords();
+
+    if (storedRecords) {
+      this.recordsSubject.next(storedRecords);
+      this.loadingSubject.next(false);
+      return;
+    }
 
     this.dataService.getData().subscribe({
       next: (data) => {
         this.recordsSubject.next(data);
+        this.saveRecords(data);
         this.loadingSubject.next(false);
       },
       error: (error) => {
@@ -127,6 +161,7 @@ readonly canGoPrev$ = this.pageIndex$.pipe(
   setSearchTerm(term: string): void {
     this.searchTermSubject.next(term);
     this.pageIndexSubject.next(0);
+    this.saveState();
   }
 
  setSort(key: keyof DataRecord): void {
@@ -146,6 +181,7 @@ readonly canGoPrev$ = this.pageIndex$.pipe(
 
   this.sortSubject.next(nextSort);
   this.pageIndexSubject.next(0);
+  this.saveState();
 }
 
 setPage(index: number): void {
@@ -155,6 +191,7 @@ setPage(index: number): void {
 setPageSize(size: number): void {
   this.pageSizeSubject.next(size);
   this.pageIndexSubject.next(0);
+  this.saveState();
 }
 
 nextPage(): void {
@@ -167,5 +204,98 @@ prevPage(): void {
   if (current > 0) {
     this.pageIndexSubject.next(current - 1);
   }
+}
+
+private saveState(): void {
+  const state: PersistedDataExplorerState = {
+    searchTerm: this.searchTermSubject.value,
+    pageSize: this.pageSizeSubject.value,
+    sort: this.sortSubject.value
+  };
+
+  localStorage.setItem(this.storageKey, JSON.stringify(state));
+}
+
+private restoreState(): void {
+  const rawState = localStorage.getItem(this.storageKey);
+
+  if (!rawState) {
+    return;
+  }
+
+  try {
+    const parsedState = JSON.parse(rawState) as PersistedDataExplorerState;
+
+    this.searchTermSubject.next(parsedState.searchTerm ?? '');
+    this.pageSizeSubject.next(parsedState.pageSize ?? 5);
+    this.sortSubject.next(parsedState.sort ?? { key: null, direction: null });
+  } catch (error) {
+    console.error('Error restoring persisted state', error);
+    localStorage.removeItem(this.storageKey);
+  }
+}
+
+resetFilters(): void {
+  this.searchTermSubject.next('');
+  this.pageSizeSubject.next(5);
+  this.sortSubject.next({ key: null, direction: null });
+  this.pageIndexSubject.next(0);
+  this.saveState();
+}
+
+private saveRecords(records: DataRecord[]): void {
+  localStorage.setItem(this.recordsStorageKey, JSON.stringify(records));
+}
+
+private getStoredRecords(): DataRecord[] | null {
+  const rawRecords = localStorage.getItem(this.recordsStorageKey);
+
+  if (!rawRecords) {
+    return null;
+  }
+
+  try {
+    return JSON.parse(rawRecords) as DataRecord[];
+  } catch (error) {
+    console.error('Error restoring stored records', error);
+    localStorage.removeItem(this.recordsStorageKey);
+    return null;
+  }
+}
+
+deleteRecord(recordId: number): void {
+  const currentRecords = this.recordsSubject.value;
+  const updatedRecords = currentRecords.filter(record => record.id !== recordId);
+
+  this.recordsSubject.next(updatedRecords);
+  this.saveRecords(updatedRecords);
+
+  const currentPageIndex = this.pageIndexSubject.value;
+  const pageSize = this.pageSizeSubject.value;
+  const startIndex = currentPageIndex * pageSize;
+
+  if (startIndex >= updatedRecords.length && currentPageIndex > 0) {
+    this.pageIndexSubject.next(currentPageIndex - 1);
+  }
+}
+
+addRecord(record: DataRecord): void {
+  const currentRecords = this.recordsSubject.value;
+  const updatedRecords = [record, ...currentRecords];
+
+  this.recordsSubject.next(updatedRecords);
+  this.saveRecords(updatedRecords);
+  this.pageIndexSubject.next(0);
+}
+
+updateRecord(updatedRecord: DataRecord): void {
+  const currentRecords = this.recordsSubject.value;
+
+  const updatedRecords = currentRecords.map(record =>
+    record.id === updatedRecord.id ? updatedRecord : record
+  );
+
+  this.recordsSubject.next(updatedRecords);
+  this.saveRecords(updatedRecords);
 }
 }

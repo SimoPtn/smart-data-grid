@@ -11,7 +11,7 @@ export class DataService {
   getData(): Observable<DataRecord[]> {
     return of(MOCK_DATA).pipe(
       tap(() => console.log('DataService getData chiamato')),
-      delay(300),
+      delay(1200),
       tap((data) => console.log('Data emesso:', data))
     );
   }

@@ -1,41 +1,105 @@
 @if (vm$ | async; as vm) {
-  <section class="data-explorer-page">
-    <h2>Data Explorer</h2>
+<section class="data-explorer-page">
+  <h2>Data Explorer</h2>
 
-    @if (vm.loading) {
-      <p>Loading data...</p>
-    } @else {
-      <app-data-explorer-toolbar
-        (searchChanged)="onSearchValueChanged($event)"
-        (pageSizeChanged)="onPageSizeValueChanged($event)"
-      />
+  @if (vm.loading) {
+  <div class="loading-state">
+    <div class="loading-toolbar">
+      <div class="skeleton skeleton-input"></div>
+      <div class="skeleton skeleton-select"></div>
+    </div>
 
-      @if (vm.filteredRecords.length > 0) {
-  <app-data-explorer-table
-    [records]="vm.paginatedRecords"
-    [displayedColumns]="vm.displayedColumns"
-    [sortState]="vm.sortState"
-    (sortChanged)="setSort($event)"
-  />
+    <div class="loading-summary skeleton"></div>
 
-  <app-data-explorer-pagination
-    [pageIndex]="vm.pageIndex"
-    [totalPages]="vm.totalPages"
-    [canGoPrev]="vm.canGoPrev"
-    [canGoNext]="vm.canGoNext"
-    (prev)="prevPage()"
-    (next)="nextPage()"
-  />
-} @else {
-<div class="empty-state">
-  <img src="/assets/empty-state-hero.svg" alt="No results" />
+    <div class="loading-table">
+      <div class="loading-table-header">
+        <div class="skeleton skeleton-cell"></div>
+        <div class="skeleton skeleton-cell"></div>
+        <div class="skeleton skeleton-cell"></div>
+        <div class="skeleton skeleton-cell"></div>
+        <div class="skeleton skeleton-cell"></div>
+      </div>
 
-  <div class="empty-state-content">
-    <h3>No results found</h3>
-    <p>Try changing your search term.</p>
+      @for (row of [1,2,3,4,5]; track row) {
+      <div class="loading-table-row">
+        <div class="skeleton skeleton-cell"></div>
+        <div class="skeleton skeleton-cell"></div>
+        <div class="skeleton skeleton-cell"></div>
+        <div class="skeleton skeleton-cell"></div>
+        <div class="skeleton skeleton-cell"></div>
+      </div>
+      }
+    </div>
+
+    <div class="loading-pagination">
+      <div class="skeleton skeleton-button"></div>
+      <div class="skeleton skeleton-page"></div>
+      <div class="skeleton skeleton-button"></div>
+    </div>
   </div>
+  } @else {
+  <app-data-explorer-toolbar [searchTerm]="vm.searchTerm" [pageSize]="vm.pageSize"
+    [hasActiveFilters]="vm.hasActiveFilters" [currentTheme]="vm.theme" (searchChanged)="onSearchValueChanged($event)"
+    (pageSizeChanged)="onPageSizeValueChanged($event)" (resetClicked)="onResetFilters()" (addClicked)="onAddRecord()"
+    (themeToggle)="onToggleTheme()" />
+
+    <div class="table-header">
+  <div class="table-summary">
+    {{ vm.summaryText }}
+  </div>
+
+  <button
+  mat-stroked-button
+  class="columns-button"
+  type="button"
+  [matMenuTriggerFor]="columnsMenu"
+>
+  <mat-icon>view_column</mat-icon>
+  Columns
+</button>
+
+  <mat-menu #columnsMenu="matMenu">
+    <div class="columns-menu-content" (click)="$event.stopPropagation()">
+      <div class="columns-menu-title">Visible columns</div>
+
+      @for (column of columns; track column.key) {
+        @if (column.hideable) {
+          <mat-checkbox
+            [checked]="column.visible"
+            (change)="toggleColumnVisibility(column.key)"
+          >
+            {{ column.label }}
+          </mat-checkbox>
+        }
+      }
+
+      <button
+        mat-button
+        type="button"
+        (click)="resetColumnVisibility()"
+      >
+        Reset columns
+      </button>
+    </div>
+  </mat-menu>
 </div>
-}
-    }
-  </section>
+  @if (vm.filteredRecords.length > 0) {
+  <app-data-explorer-table [records]="vm.paginatedRecords" [displayedColumns]="displayedColumns"
+    [sortState]="vm.sortState" (sortChanged)="setSort($event)" (viewRecord)="onViewRecord($event)"
+    (editRecord)="onEditRecord($event)"  (deleteRecord)="onDeleteRecord($event)" />
+
+  <app-data-explorer-pagination [pageIndex]="vm.pageIndex" [totalPages]="vm.totalPages" [canGoPrev]="vm.canGoPrev"
+    [canGoNext]="vm.canGoNext" (prev)="prevPage()" (next)="nextPage()" />
+  } @else {
+  <div class="empty-state">
+    <img src="/assets/empty-state-hero.svg" alt="No results" />
+
+    <div class="empty-state-content">
+      <h3>No results found</h3>
+      <p>Try changing your search term.</p>
+    </div>
+  </div>
+  }
+  }
+</section>
 }

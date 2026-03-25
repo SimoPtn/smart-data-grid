@@ -1,0 +1,11 @@
+.record-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  min-width: 640px;
+  padding-top: 8px;
+}
+
+mat-form-field {
+  width: 100%;
+}

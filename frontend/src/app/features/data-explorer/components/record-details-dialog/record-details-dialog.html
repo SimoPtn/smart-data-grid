@@ -1,0 +1,53 @@
+<h2 mat-dialog-title>Record details</h2>
+
+<div mat-dialog-content class="details-content">
+  <div class="details-grid">
+    <div class="detail-item">
+      <span class="detail-label">Name</span>
+      <span class="detail-value">{{ data.record.name }}</span>
+    </div>
+
+    <div class="detail-item">
+      <span class="detail-label">Email</span>
+      <span class="detail-value">{{ data.record.email }}</span>
+    </div>
+
+    <div class="detail-item">
+      <span class="detail-label">Company</span>
+      <span class="detail-value">{{ data.record.company }}</span>
+    </div>
+
+    <div class="detail-item">
+      <span class="detail-label">Role</span>
+      <span class="detail-value">{{ data.record.role }}</span>
+    </div>
+
+    <div class="detail-item">
+      <span class="detail-label">Status</span>
+      <span class="detail-value">{{ data.record.status }}</span>
+    </div>
+
+    <div class="detail-item">
+      <span class="detail-label">Country</span>
+      <span class="detail-value">{{ data.record.country }}</span>
+    </div>
+
+    <div class="detail-item">
+      <span class="detail-label">Score</span>
+      <span class="detail-value">{{ data.record.score }}</span>
+    </div>
+
+    <div class="detail-item">
+      <span class="detail-label">Created at</span>
+      <span class="detail-value">{{ data.record.createdAt }}</span>
+    </div>
+  </div>
+</div>
+
+<div mat-dialog-actions align="end">
+  <button mat-flat-button type="button" mat-dialog-close>
+    Close
+  </button>
+</div>
+
+

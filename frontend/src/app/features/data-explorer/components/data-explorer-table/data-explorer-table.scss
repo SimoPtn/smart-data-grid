@@ -9,3 +9,70 @@
   cursor: pointer;
   user-select: none;
 }
+
+.data-table {
+  width: 100%;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.sortable {
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 180ms ease;
+}
+
+.sortable:hover {
+  background: #f8fafc;
+}
+
+.sort-header-content {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.sort-header-content mat-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+  color: #94a3b8;
+}
+
+.active-sort {
+  color: #0f172a;
+  font-weight: 600;
+}
+
+.active-sort .sort-header-content mat-icon {
+  color: #2563eb;
+}
+
+.actions-header,
+.actions-cell {
+  text-align: center;
+}
+
+.actions-cell-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.actions-cell button {
+  color: #94a3b8;
+}
+
+.actions-cell button:firs-child:hover {
+  color: #2563eb;
+}
+
+.actions-cell button:nth-child(2):hover {
+  color: #0f766e;
+}
+
+.actions-cell button:last-child:hover {
+  color: #dc2626;
+}
