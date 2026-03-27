@@ -15,7 +15,7 @@ import { TableColumn, DataTableColumnKey } from '../../models/table-column.model
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIcon } from "@angular/material/icon";
-import { ThemeService } from '../../../../core/services/theme';
+
 
 @Component({
   selector: 'app-data-explorer-page',
@@ -37,7 +37,7 @@ export class DataExplorerPage implements OnInit {
   private readonly store = inject(DataExplorerStore);
   private readonly dialog = inject(MatDialog);
   private readonly tablePreferencesService = inject(TablePreferencesService);
-private readonly themeService = inject(ThemeService);
+
   columns: TableColumn[] = this.tablePreferencesService.getColumns();
 
   readonly vm$ = combineLatest({
@@ -53,7 +53,6 @@ private readonly themeService = inject(ThemeService);
   sortState: this.store.sort$,
   searchTerm: this.store.searchTerm$,
   hasActiveFilters: this.store.hasActiveFilters$,
-  theme: this.themeService.theme$,
 }).pipe(
   map(vm => {
   const totalRecords = vm.filteredRecords.length;
@@ -180,7 +179,4 @@ resetColumnVisibility(): void {
   this.columns = this.tablePreferencesService.resetColumns();
 }
 
-onToggleTheme(): void {
-  this.themeService.toggleTheme();
-}
 }

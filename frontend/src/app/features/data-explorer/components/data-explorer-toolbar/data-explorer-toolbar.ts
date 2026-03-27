@@ -5,8 +5,6 @@ import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { Theme } from '../../../../core/services/theme';
 @Component({
   selector: 'app-data-explorer-toolbar',
   standalone: true,
@@ -17,7 +15,6 @@ import { Theme } from '../../../../core/services/theme';
     MatIconModule,
     MatButtonModule,
     MatMenuModule,
-    MatSlideToggleModule,
   ],
   templateUrl: './data-explorer-toolbar.html',
   styleUrl: './data-explorer-toolbar.scss',
@@ -26,18 +23,14 @@ export class DataExplorerToolbar {
   @Input() searchTerm = '';
   @Input() pageSize = 5;
   @Input() hasActiveFilters = false;
-  @Input() currentTheme: Theme = 'light';
 
-  @Output() themeToggle = new EventEmitter<void>();
   @Output() searchChanged = new EventEmitter<string>();
   @Output() pageSizeChanged = new EventEmitter<number>();
   @Output() resetClicked = new EventEmitter<void>();
   @Output() addClicked = new EventEmitter<void>();
 
 
-  isDark(): boolean {
-  return this.currentTheme === 'dark';
-}
+
   onSearch(event: Event): void {
     const value = (event.target as HTMLInputElement).value;
     this.searchChanged.emit(value);
@@ -59,7 +52,4 @@ export class DataExplorerToolbar {
     this.addClicked.emit();
   }
 
-  toggleTheme(): void {
-  this.themeToggle.emit();
-}
 }

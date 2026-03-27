@@ -39,9 +39,8 @@
   </div>
   } @else {
   <app-data-explorer-toolbar [searchTerm]="vm.searchTerm" [pageSize]="vm.pageSize"
-    [hasActiveFilters]="vm.hasActiveFilters" [currentTheme]="vm.theme" (searchChanged)="onSearchValueChanged($event)"
-    (pageSizeChanged)="onPageSizeValueChanged($event)" (resetClicked)="onResetFilters()" (addClicked)="onAddRecord()"
-    (themeToggle)="onToggleTheme()" />
+    [hasActiveFilters]="vm.hasActiveFilters" (searchChanged)="onSearchValueChanged($event)"
+    (pageSizeChanged)="onPageSizeValueChanged($event)" (resetClicked)="onResetFilters()" (addClicked)="onAddRecord()" />
 
     <div class="table-header">
   <div class="table-summary">
@@ -84,9 +83,17 @@
   </mat-menu>
 </div>
   @if (vm.filteredRecords.length > 0) {
-  <app-data-explorer-table [records]="vm.paginatedRecords" [displayedColumns]="displayedColumns"
-    [sortState]="vm.sortState" (sortChanged)="setSort($event)" (viewRecord)="onViewRecord($event)"
-    (editRecord)="onEditRecord($event)"  (deleteRecord)="onDeleteRecord($event)" />
+  <div class="table-container">
+  <app-data-explorer-table
+    [records]="vm.paginatedRecords"
+    [displayedColumns]="displayedColumns"
+    [sortState]="vm.sortState"
+    (sortChanged)="setSort($event)"
+    (viewRecord)="onViewRecord($event)"
+    (editRecord)="onEditRecord($event)"
+    (deleteRecord)="onDeleteRecord($event)"
+  />
+</div>
 
   <app-data-explorer-pagination [pageIndex]="vm.pageIndex" [totalPages]="vm.totalPages" [canGoPrev]="vm.canGoPrev"
     [canGoNext]="vm.canGoNext" (prev)="prevPage()" (next)="nextPage()" />

@@ -22,18 +22,6 @@
   </div>
 
   <div class="toolbar-right">
-  <div class="theme-toggle">
-  <mat-icon>
-    {{ isDark() ? 'dark_mode' : 'light_mode' }}
-  </mat-icon>
-
-  <mat-slide-toggle
-    [checked]="isDark()"
-    (change)="toggleTheme()"
-  >
-    Dark mode
-  </mat-slide-toggle>
-</div>
     <button mat-stroked-button type="button" [disabled]="!hasActiveFilters" (click)="resetFilters()">
       Reset
     </button>

@@ -131,3 +131,49 @@ body.dark-theme .detail-item {
   background: #0f172a;
   border-color: #334155;
 }
+
+body.dark-theme .app-header {
+  background: #020617;
+}
+
+body.dark-theme .theme-toggle mat-icon {
+  color: #f8fafc;
+}
+
+body.dark-theme .mat-mdc-unelevated-button.mat-primary {
+  background-color: #9EBBF3; // blu più leggibile
+  color: #002F65; // testo scuro = contrasto migliore
+}
+
+
+body.dark-theme .data-table {
+  background: #1e293b;
+  border-color: #334155;
+}
+
+body.dark-theme .mat-mdc-header-row,
+body.dark-theme .mat-mdc-header-cell {
+  background: #0f172a;
+}
+
+body.dark-theme .mat-mdc-header-cell {
+  color: #f8fafc;
+  border-bottom-color: #334155;
+}
+
+body.dark-theme .mat-mdc-cell {
+  color: #e2e8f0;
+  border-bottom-color: #334155;
+}
+
+body.dark-theme .mat-mdc-row:hover {
+  background: #243247;
+}
+
+body.dark-theme .sortable:hover {
+  background: #1e293b;
+}
+
+body.dark-theme .active-sort .sort-header-content mat-icon {
+  color: #60a5fa;
+}

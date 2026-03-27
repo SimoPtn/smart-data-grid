@@ -1,6 +1,24 @@
 <div class="app-shell">
   <header class="app-header">
-    <h1>Smart Data Grid</h1>
+    <div class="app-header-left">
+      <h1 class="app-title">Smart Data Grid</h1>
+    </div>
+
+    <div class="app-header-right">
+      @if (theme$ | async; as theme) {
+        <div class="theme-toggle">
+          <mat-icon>
+            {{ theme === 'dark' ? 'dark_mode' : 'light_mode' }}
+          </mat-icon>
+
+          <mat-slide-toggle
+            [checked]="theme === 'dark'"
+            (change)="onToggleTheme()"
+          >
+          </mat-slide-toggle>
+        </div>
+      }
+    </div>
   </header>
 
   <main class="app-content">
